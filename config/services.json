@@ -1,0 +1,82 @@
+{
+  "services": {
+    "mysql": {
+      "defaultPort": 3360,
+      "requiresInit": true,
+      "versions": {
+        "8.4": {
+          "latest": "8.4.3",
+          "releases": {}
+        },
+        "8.0": {
+          "latest": "8.0.40",
+          "releases": {}
+        }
+      }
+    },
+    "mariadb": {
+      "defaultPort": 3361,
+      "requiresInit": true,
+      "versions": {
+        "11.4": {
+          "latest": "11.4.4",
+          "releases": {}
+        }
+      }
+    },
+    "postgresql": {
+      "defaultPort": 5440,
+      "requiresInit": true,
+      "versions": {
+        "17": {
+          "latest": "17.2",
+          "releases": {}
+        },
+        "16": {
+          "latest": "16.6",
+          "releases": {}
+        }
+      }
+    },
+    "redis": {
+      "defaultPort": 6380,
+      "requiresInit": false,
+      "versions": {
+        "7": {
+          "latest": "7.4.1",
+          "releases": {}
+        }
+      }
+    },
+    "meilisearch": {
+      "defaultPort": 7710,
+      "requiresInit": false,
+      "versions": {
+        "1.11": {
+          "latest": "1.11.3",
+          "releases": {}
+        }
+      }
+    },
+    "typesense": {
+      "defaultPort": 8118,
+      "requiresInit": false,
+      "versions": {
+        "27": {
+          "latest": "27.1",
+          "releases": {}
+        }
+      }
+    },
+    "minio": {
+      "defaultPort": 9010,
+      "requiresInit": false,
+      "versions": {
+        "2024": {
+          "latest": "2024.11.07",
+          "releases": {}
+        }
+      }
+    }
+  }
+}
