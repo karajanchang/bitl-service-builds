@@ -42,7 +42,7 @@ elif [ "$ARCH" = "x86_64" ]; then
 fi
 
 echo "🔧 Compiling..."
-make -j$(sysctl -n hw.ncpu) BUILD_TLS=no
+make -j$(/usr/sbin/sysctl -n hw.ncpu) BUILD_TLS=no
 
 # Package
 cd ../..

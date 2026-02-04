@@ -15,7 +15,7 @@ VERSION="${1:-8.4.3}"
 ARCH="${2:-$(uname -m)}"
 BUILD_DIR="build/mysql-${VERSION}"
 OUTPUT_DIR="dist"
-NPROC=$(sysctl -n hw.ncpu)
+NPROC=$(/usr/sbin/sysctl -n hw.ncpu)
 
 echo "🔨 Building MySQL ${VERSION} for ${ARCH}..."
 

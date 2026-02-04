@@ -1,0 +1,76 @@
+name: Build PostgreSQL
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'PostgreSQL version to build'
+        required: true
+        default: '16.4'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - runner: macos-14  # M1
+            arch: arm64
+          - runner: macos-13  # Intel
+            arch: x86_64
+    
+    runs-on: ${{ matrix.runner }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: |
+          brew install readline openssl@3 icu4c
+      
+      - name: Build PostgreSQL
+        run: |
+          chmod +x scripts/build-postgresql.sh
+          ./scripts/build-postgresql.sh ${{ github.event.inputs.version }} ${{ matrix.arch }}
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: postgresql-${{ github.event.inputs.version }}-macos-${{ matrix.arch }}
+          path: dist/postgresql-${{ github.event.inputs.version }}-macos-${{ matrix.arch }}.tar.gz
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: postgresql-${{ github.event.inputs.version }}
+          name: PostgreSQL ${{ github.event.inputs.version }}
+          files: artifacts/**/*.tar.gz
+          generate_release_notes: false
+          body: |
+            Pre-built PostgreSQL ${{ github.event.inputs.version }} binaries for BitL.
+            
+            ## Binaries included
+            - postgres
+            - psql
+            - pg_ctl
+            - initdb
+            - createdb
+            - dropdb
+            - pg_dump
+            - pg_restore
+            
+            ## Installation
+            BitL will automatically download these when needed.
