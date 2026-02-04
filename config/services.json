@@ -44,7 +44,16 @@
       "versions": {
         "7": {
           "latest": "7.4.1",
-          "releases": {}
+          "releases": {
+            "7.4.1": {
+              "arm64": {
+                "url": "https://github.com/karajanchang/bitl-service-builds/releases/download/redis-7.4.1/redis-7.4.1-macos-arm64.tar.gz",
+                "sha256": "f8d40c9a9e81f3bada3e095fd9b07bf32d936998d8ef1ca0c562952fa6f8a951",
+                "size": 2915776,
+                "binaries": ["redis-server", "redis-cli", "redis-benchmark"]
+              }
+            }
+          }
         }
       }
     },
