@@ -52,7 +52,17 @@ else
     exit 1
 fi
 
-echo "🔧 Configuring..."
+# Find Homebrew bison
+if [ -d "/opt/homebrew/opt/bison/bin" ]; then
+    BISON_PATH="/opt/homebrew/opt/bison/bin/bison"
+elif [ -d "/usr/local/opt/bison/bin" ]; then
+    BISON_PATH="/usr/local/opt/bison/bin/bison"
+else
+    echo "❌ Homebrew bison not found. Install with: brew install bison"
+    exit 1
+fi
+
+echo "🔧 Configuring (using bison: ${BISON_PATH})..."
 cmake ../src \
     -DCMAKE_OSX_ARCHITECTURES="${ARCH}" \
     -DCMAKE_BUILD_TYPE=Release \
@@ -67,7 +77,8 @@ cmake ../src \
     -DWITH_LZ4=bundled \
     -DWITH_ZSTD=bundled \
     -DWITH_ZLIB=bundled \
-    -DWITH_PROTOBUF=bundled
+    -DWITH_PROTOBUF=bundled \
+    -DBISON_EXECUTABLE="${BISON_PATH}"
 
 # Build
 echo "🔧 Compiling (this takes ~30 minutes)..."

@@ -15,8 +15,8 @@ jobs:
         include:
           - runner: macos-14  # M1
             arch: arm64
-          - runner: macos-13  # Intel  
-            arch: x86_64
+          # - runner: macos-15  # Intel (skip for now - most users are arm64)
+          #   arch: x86_64
     
     runs-on: ${{ matrix.runner }}
     
@@ -25,7 +25,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          brew install cmake ninja openssl@3 pkg-config libtirpc rpcsvc-proto
+          brew install cmake ninja openssl@3 pkg-config bison
       
       - name: Build MySQL
         run: |
