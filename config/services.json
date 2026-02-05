@@ -6,7 +6,16 @@
       "versions": {
         "8.4": {
           "latest": "8.4.3",
-          "releases": {}
+          "releases": {
+            "8.4.3": {
+              "arm64": {
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/mysql-8.4.3/mysql-8.4.3-macos-arm64.tar.gz",
+                "sha256": "PENDING",
+                "size": 27419894,
+                "binaries": ["mysqld", "mysql", "mysqladmin", "mysqldump", "mysql_secure_installation"]
+              }
+            }
+          }
         },
         "8.0": {
           "latest": "8.0.40",
@@ -34,7 +43,16 @@
         },
         "16": {
           "latest": "16.6",
-          "releases": {}
+          "releases": {
+            "16.4": {
+              "arm64": {
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/postgresql-16.4/postgresql-16.4-macos-arm64.tar.gz",
+                "sha256": "7c17cda2f2c152f2c796e74afb08001096956bd42b797859438307bcb10cb508",
+                "size": 7130663,
+                "binaries": ["postgres", "psql", "pg_ctl", "initdb", "pg_dump", "pg_restore"]
+              }
+            }
+          }
         }
       }
     },
@@ -47,7 +65,7 @@
           "releases": {
             "7.4.1": {
               "arm64": {
-                "url": "https://github.com/karajanchang/bitl-service-builds/releases/download/redis-7.4.1/redis-7.4.1-macos-arm64.tar.gz",
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/redis-7.4.1/redis-7.4.1-macos-arm64.tar.gz",
                 "sha256": "f8d40c9a9e81f3bada3e095fd9b07bf32d936998d8ef1ca0c562952fa6f8a951",
                 "size": 2915776,
                 "binaries": ["redis-server", "redis-cli", "redis-benchmark"]
@@ -63,7 +81,16 @@
       "versions": {
         "1.11": {
           "latest": "1.11.3",
-          "releases": {}
+          "releases": {
+            "1.11.3": {
+              "arm64": {
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/meilisearch-1.11.3/meilisearch-1.11.3-macos-arm64.tar.gz",
+                "sha256": "8334363fa6c8477f0474cc226de1783274e2f1520843366cc7a9fa7863464930",
+                "size": 11229543,
+                "binaries": ["meilisearch"]
+              }
+            }
+          }
         }
       }
     },
@@ -73,7 +100,16 @@
       "versions": {
         "27": {
           "latest": "27.1",
-          "releases": {}
+          "releases": {
+            "27.1": {
+              "arm64": {
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/typesense-27.1/typesense-27.1-macos-arm64.tar.gz",
+                "sha256": "51b43b3184744f2f0bec2e9864a23af0635022bd43f4ba47616ed44e7a1bbef5",
+                "size": 37155974,
+                "binaries": ["typesense-server"]
+              }
+            }
+          }
         }
       }
     },
