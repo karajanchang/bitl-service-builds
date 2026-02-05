@@ -10,7 +10,7 @@
             "8.4.3": {
               "arm64": {
                 "url": "https://github.com/mur-run/bitl-service-builds/releases/download/mysql-8.4.3/mysql-8.4.3-macos-arm64.tar.gz",
-                "sha256": "PENDING",
+                "sha256": "cca44995aca6b06826efffaf1d1e63e0efdb86d66a437b7885850e5124d62c90",
                 "size": 27419894,
                 "binaries": ["mysqld", "mysql", "mysqladmin", "mysqldump", "mysql_secure_installation"]
               }
