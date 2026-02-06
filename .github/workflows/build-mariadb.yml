@@ -1,0 +1,79 @@
+name: Build MariaDB
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'MariaDB version to build'
+        required: true
+        default: '11.4.4'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - runner: macos-14  # M1
+            arch: arm64
+
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        run: |
+          sudo xcode-select -p
+          xcrun --sdk macosx --show-sdk-path
+          echo "SDKROOT=$(xcrun --sdk macosx --show-sdk-path)" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          brew install cmake ninja openssl@3 pkg-config bison gnutls
+
+      - name: Build MariaDB
+        run: |
+          chmod +x scripts/build-mariadb.sh
+          ./scripts/build-mariadb.sh ${{ github.event.inputs.version }} ${{ matrix.arch }}
+        timeout-minutes: 120
+        env:
+          SDKROOT: ${{ env.SDKROOT }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mariadb-${{ github.event.inputs.version }}-macos-${{ matrix.arch }}
+          path: dist/mariadb-${{ github.event.inputs.version }}-macos-${{ matrix.arch }}.tar.gz
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: mariadb-${{ github.event.inputs.version }}
+          name: MariaDB ${{ github.event.inputs.version }}
+          files: artifacts/**/*.tar.gz
+          generate_release_notes: false
+          body: |
+            Pre-built MariaDB ${{ github.event.inputs.version }} binaries for BitL.
+            
+            ## Binaries included
+            - mariadbd (+ mysqld symlink)
+            - mariadb (+ mysql symlink)
+            - mariadb-admin (+ mysqladmin symlink)
+            - mariadb-dump (+ mysqldump symlink)
+            
+            ## Installation
+            BitL will automatically download these when needed.

@@ -62,10 +62,19 @@ else
     exit 1
 fi
 
+# Find SDK root (critical for GitHub Actions)
+if [ -z "${SDKROOT:-}" ]; then
+    SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+fi
+echo "📱 Using SDK: ${SDKROOT}"
+
 echo "🔧 Configuring (using bison: ${BISON_PATH})..."
 cmake ../src \
     -DCMAKE_OSX_ARCHITECTURES="${ARCH}" \
+    -DCMAKE_OSX_SYSROOT="${SDKROOT}" \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_C_FLAGS="-isysroot ${SDKROOT}" \
+    -DCMAKE_CXX_FLAGS="-isysroot ${SDKROOT} -stdlib=libc++" \
     -DWITH_SSL="${OPENSSL_ROOT}" \
     -DWITH_UNIT_TESTS=OFF \
     -DPLUGIN_TOKUDB=NO \
@@ -75,6 +84,8 @@ cmake ../src \
     -DPLUGIN_SPHINX=NO \
     -DPLUGIN_CONNECT=NO \
     -DPLUGIN_ROCKSDB=NO \
+    -DPLUGIN_COLUMNSTORE=NO \
+    -DPLUGIN_S3=NO \
     -DWITH_MARIABACKUP=OFF \
     -DWITH_WSREP=OFF \
     -DBISON_EXECUTABLE="${BISON_PATH}"
@@ -135,7 +146,7 @@ echo ""
 echo "Manifest entry:"
 echo "\"${VERSION}\": {"
 echo "  \"${ARCH}\": {"
-echo "    \"url\": \"https://github.com/karajanchang/bitl-service-builds/releases/download/mariadb-${VERSION}/${TARBALL_NAME}\","
+echo "    \"url\": \"https://github.com/mur-run/bitl-service-builds/releases/download/mariadb-${VERSION}/${TARBALL_NAME}\","
 echo "    \"sha256\": \"${CHECKSUM}\","
 echo "    \"size\": ${SIZE},"
 echo "    \"binaries\": [\"mariadbd\", \"mariadb\", \"mariadb-admin\", \"mariadb-dump\"]"
