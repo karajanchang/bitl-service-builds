@@ -119,7 +119,16 @@
       "versions": {
         "2024": {
           "latest": "2024.11.07",
-          "releases": {}
+          "releases": {
+            "2024.11.07": {
+              "arm64": {
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/minio-2024.11.07/minio-2024.11.07-macos-arm64.tar.gz",
+                "sha256": "f35cd015d2d69e2ab5e1017774ccb37217480a955166ebb26cf936d715020a5b",
+                "size": 48005586,
+                "binaries": ["minio", "mc"]
+              }
+            }
+          }
         }
       }
     }
