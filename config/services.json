@@ -16,20 +16,6 @@
               }
             }
           }
-        },
-        "8.0": {
-          "latest": "8.0.40",
-          "releases": {}
-        }
-      }
-    },
-    "mariadb": {
-      "defaultPort": 3361,
-      "requiresInit": true,
-      "versions": {
-        "11.4": {
-          "latest": "11.4.4",
-          "releases": {}
         }
       }
     },
@@ -37,10 +23,6 @@
       "defaultPort": 5440,
       "requiresInit": true,
       "versions": {
-        "17": {
-          "latest": "17.2",
-          "releases": {}
-        },
         "16": {
           "latest": "16.4",
           "releases": {
