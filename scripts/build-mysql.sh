@@ -99,6 +99,40 @@ cp "${BUILD_DIR}/build/runtime_output_directory/mysqldump" "${PACKAGE_DIR}/bin/"
 # Copy required libraries
 cp -R "${BUILD_DIR}/build/library_output_directory/"*.dylib "${PACKAGE_DIR}/lib/" 2>/dev/null || true
 
+# Fix library paths (rpath) so binaries can find bundled dylibs
+echo "🔗 Fixing library paths..."
+for bin in "${PACKAGE_DIR}/bin/"*; do
+    if [ -f "$bin" ]; then
+        # Add rpath to look in ../lib relative to the binary
+        install_name_tool -add_rpath "@executable_path/../lib" "$bin" 2>/dev/null || true
+        
+        # Fix all @loader_path references to use @rpath instead
+        for dylib in "${PACKAGE_DIR}/lib/"*.dylib; do
+            if [ -f "$dylib" ]; then
+                dylib_name=$(basename "$dylib")
+                install_name_tool -change "@loader_path/${dylib_name}" "@rpath/${dylib_name}" "$bin" 2>/dev/null || true
+            fi
+        done
+    fi
+done
+
+# Fix dylib inter-dependencies
+for dylib in "${PACKAGE_DIR}/lib/"*.dylib; do
+    if [ -f "$dylib" ]; then
+        # Set the dylib's own id to use @rpath
+        dylib_name=$(basename "$dylib")
+        install_name_tool -id "@rpath/${dylib_name}" "$dylib" 2>/dev/null || true
+        
+        # Fix references to other bundled dylibs
+        for other_dylib in "${PACKAGE_DIR}/lib/"*.dylib; do
+            if [ -f "$other_dylib" ]; then
+                other_name=$(basename "$other_dylib")
+                install_name_tool -change "@loader_path/${other_name}" "@rpath/${other_name}" "$dylib" 2>/dev/null || true
+            fi
+        done
+    fi
+done
+
 # Strip binaries
 strip "${PACKAGE_DIR}/bin/"* 2>/dev/null || true
 
