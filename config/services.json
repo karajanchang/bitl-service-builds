@@ -42,7 +42,7 @@
           "releases": {}
         },
         "16": {
-          "latest": "16.6",
+          "latest": "16.4",
           "releases": {
             "16.4": {
               "arm64": {
