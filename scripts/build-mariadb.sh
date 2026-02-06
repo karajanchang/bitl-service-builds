@@ -70,6 +70,7 @@ echo "📱 Using SDK: ${SDKROOT}"
 
 echo "🔧 Configuring (using bison: ${BISON_PATH})..."
 cmake ../src \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DCMAKE_OSX_ARCHITECTURES="${ARCH}" \
     -DCMAKE_OSX_SYSROOT="${SDKROOT}" \
     -DCMAKE_BUILD_TYPE=Release \
