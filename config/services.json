@@ -38,6 +38,25 @@
         }
       }
     },
+    "mongodb": {
+      "defaultPort": 27018,
+      "requiresInit": true,
+      "versions": {
+        "8.0": {
+          "latest": "8.0.4",
+          "releases": {
+            "8.0.4": {
+              "arm64": {
+                "url": "https://github.com/mur-run/bitl-service-builds/releases/download/mongodb-8.0.4/mongodb-8.0.4-macos-arm64.tar.gz",
+                "sha256": "6d57e5b01689a22d51670dae90e85053a163ef41a44ece651b631ae63a7ae4e6",
+                "size": 82159795,
+                "binaries": ["mongod", "mongos"]
+              }
+            }
+          }
+        }
+      }
+    },
     "redis": {
       "defaultPort": 6380,
       "requiresInit": false,
